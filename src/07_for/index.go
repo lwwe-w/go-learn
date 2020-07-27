@@ -12,6 +12,10 @@ func main() {
 	for2()
 	test1()
 	test2()
+	label()
+	testgoto()
+	test3()
+	test4()
 }
 
 func forLoop() {
@@ -56,6 +60,29 @@ func rectangleStars() {
 	}
 }
 
+func label() {
+LAB:
+	for i := 0; i <= 5; i++ {
+		for j := 0; j <= 5; j++ {
+			if j == 4 {
+				break LAB
+			}
+			fmt.Println(i, j)
+		}
+	}
+}
+
+func testgoto() {
+	i := 0
+HERE:
+	fmt.Println(i)
+	i++
+	if i == 5 {
+		return
+	}
+	goto HERE
+}
+
 func for2() {
 	var i int = 5
 	for i >= 0 {
@@ -77,5 +104,25 @@ func test2() {
 	for s != "aaaaa" {
 		fmt.Println(s)
 		s = s + "a"
+	}
+}
+
+func test3() {
+	i := 0
+	for {
+		if i >= 3 {
+			break
+		}
+		fmt.Println(i)
+		i++
+	}
+}
+
+func test4() {
+	for i := 0; i < 7; i++ {
+		if i%2 == 0 {
+			continue
+		}
+		fmt.Println(i)
 	}
 }
