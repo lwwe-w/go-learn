@@ -4,18 +4,19 @@ import (
 	"errors"
 	"fmt"
 	"math"
+	"time"
 )
 
 var num int = 10
-var numx2, numx3, sum, multiply, poor int
+var num2, num3, sum, multiply, poor int
 
 func main() {
 
-	numx2, numx3 = getX2AndX3(num)
-	fmt.Println(num, numx2, numx3)
+	num2, num3 = getX2AndX3(num)
+	fmt.Println(num, num2, num3)
 
-	numx2, numx3 = getX2AndX3_2(num)
-	fmt.Println(num, numx2, numx3)
+	num2, num3 = getX2AndX3_2(num)
+	fmt.Println(num, num2, num3)
 
 	sum, multiply, poor = multReturnval(num, num)
 	fmt.Println(sum, multiply, poor)
@@ -43,6 +44,24 @@ func main() {
 	fmt.Println("slice", slice)
 	minVal := min(slice...)
 	fmt.Println("minVal", minVal)
+
+	defer function1()
+	f()
+
+	print(10)
+
+	fmt.Println("factorial", factorial(20))
+
+	// 斐波那契数列
+	start := time.Now()
+	g := fibonacci()
+	for i := 0; i <= 100; i++ {
+		result := g(i)
+		fmt.Printf("fibonacci(%d) is: %d\n", i, result)
+	}
+	end := time.Now()
+	delta := end.Sub(start)
+	fmt.Println("delta", start, end, delta)
 }
 
 func getX2AndX3(input int) (int, int) {
@@ -102,4 +121,53 @@ func min(s ...int) int {
 		}
 	}
 	return min
+}
+
+// defer
+func function1() {
+	fmt.Println("top function1")
+	defer function2()
+	fmt.Println("bottom function1")
+}
+
+func function2() {
+	fmt.Println("function2")
+}
+
+// 后进先出
+func f() {
+	for i := 0; i < 5; i++ {
+		defer fmt.Println(i)
+	}
+}
+
+// 递归
+func print(val int) {
+	if val > 0 {
+		fmt.Println(val)
+		print(val - 1)
+	}
+}
+
+func factorial(val int) (res int) {
+	if val == 0 {
+		res = 1
+	} else {
+		res = val * factorial(val-1)
+	}
+	return
+}
+
+func fibonacci() func(e int) (res int) {
+	var pre, next int
+	return func(e int) (res int) {
+		if e <= 1 {
+			res, pre, next = 1, 1, 1
+		} else {
+			res = pre + next
+			next = pre
+			pre = res
+		}
+		return
+	}
 }
